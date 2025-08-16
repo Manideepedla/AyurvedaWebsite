@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9040:9040"
+    environment:
+      NODE_ENV: production
+      # Add any other necessary environment variables here
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9040"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s # Give the app some time to start up initially
+    volumes:
+      - ./public:/app/public
+
+volumes:
+  mysql_data:
+  mongo_data:
